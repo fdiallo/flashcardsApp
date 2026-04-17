@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="storage.js" defer></script>
+    <script src="app.js" defer></script>
+    <title>Flashcards App</title>
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div>
+                <h1>Flashcards</h1>
+                <p>Study decks, review cards, and strengthen your recall.</p>
+            </div>
+            <button class="control-button" data-modal-open type="button" aria-label="Open modal for information">Open modal</button>
+        </header>
+
+        <div class="app-layout">
+            <aside class="deck-sidebar" aria-label="Study decks">
+                <h2>Decks</h2>
+                <form class="deck-form" id="deck-form">
+                    <label class="sr-only" for="deck-name">New deck name</label>
+                    <input id="deck-name" name="deckName" type="text" placeholder="New deck name" required>
+                    <button class="control-button" type="submit">Add Deck</button>
+                </form>
+                <ul class="deck-list" aria-live="polite"></ul>
+            </aside>
+
+            <main class="card-area">
+                <section class="card-view">
+                    <div class="card-view-header">
+                        <h2 id="card-view-title">Cards</h2>
+                        <div class="card-search-box">
+                            <label for="card-search">Search cards</label>
+                            <input id="card-search" type="text" placeholder="Search...">
+                            <span id="search-count" class="search-count hidden" aria-live="polite" aria-atomic="true">0 matches</span>
+                        </div>
+                        <form class="card-form" id="card-form">
+                            <label class="sr-only" for="card-question">Question</label>
+                            <input id="card-question" name="question" type="text" placeholder="Question" required>
+                            <label class="sr-only" for="card-answer">Answer</label>
+                            <input id="card-answer" name="answer" type="text" placeholder="Answer" required>
+                            <input id="card-id" name="cardId" type="hidden">
+                            <div class="card-form-actions">
+                                <button class="control-button" type="submit">Save Card</button>
+                                <button class="control-button secondary hidden" id="card-cancel" type="button">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="card-list" aria-live="polite"></ul>
+                    <div id="study-view" class="study-view hidden" role="region" aria-label="Study mode">
+                        <div class="study-header">
+                            <p class="study-progress" id="study-progress">Card 1 of 5</p>
+                            <button id="study-exit" type="button" class="control-button secondary" aria-label="Exit study mode">Exit Study Mode</button>
+                        </div>
+                        <div class="study-card-wrapper">
+                            <div id="study-card" class="study-card" tabindex="0" role="region" aria-label="Study card"></div>
+                        </div>
+                        <div class="study-controls">
+                            <button id="study-prev" type="button" class="control-button secondary" aria-label="Previous card">← Previous</button>
+                            <p class="study-hint" id="study-hint">Space to flip • ← → to navigate • Esc to exit</p>
+                            <button id="study-next" type="button" class="control-button secondary" aria-label="Next card">Next →</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer class="app-footer">
+            <p>© 2026 Flashcards App</p>
+        </footer>
+    </div>
+
+    <div class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal" role="document">
+            <button class="modal-close" data-modal-close type="button" aria-label="Close modal">Close</button>
+            <h2 id="modal-title">Flashcard Info</h2>
+            <p>This modal is built for accessibility with focus trap, ESC to close, and return focus to the opener.</p>
+            <button class="control-button" data-modal-close type="button">Got it</button>
+        </div>
+    </div>
+</body>
+</html>
