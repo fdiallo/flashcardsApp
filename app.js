@@ -22,16 +22,44 @@ let studyKeydownHandler = null;
 let searchQuery = '';
 let searchTimeoutId = null;
 
-const decks = [
+// Load initial state from storage
+const initialState = loadState();
+let decks = initialState.decks || [
   { id: 'deck-1', name: 'HTML Basics' },
   { id: 'deck-2', name: 'CSS Essentials' },
-  { id: 'deck-3', name: 'JavaScript' },
+  { id: 'deck-3', name: 'JavaScript Fundamentals' },
+  { id: 'deck-4', name: 'World Capitals' },
+  { id: 'deck-5', name: 'Programming Languages' },
+  { id: 'deck-6', name: 'Colors & Hex Codes' },
 ];
 
-const cards = [
+let cards = initialState.cards || [
   { id: 'card-1', question: 'What does HTML stand for?', answer: 'HyperText Markup Language' },
   { id: 'card-2', question: 'What is CSS used for?', answer: 'Styling web pages' },
+  { id: 'card-3', question: 'What is JavaScript?', answer: 'A programming language for web development' },
+  { id: 'card-4', question: 'What is a CSS selector?', answer: 'A pattern used to select HTML elements to style' },
+  { id: 'card-5', question: 'What is the DOM?', answer: 'Document Object Model - a programming interface for HTML documents' },
+  { id: 'card-6', question: 'What is the capital of France?', answer: 'Paris' },
+  { id: 'card-7', question: 'What is the capital of Germany?', answer: 'Berlin' },
+  { id: 'card-8', question: 'What is the capital of Japan?', answer: 'Tokyo' },
+  { id: 'card-9', question: 'What is the capital of Brazil?', answer: 'Brasília' },
+  { id: 'card-10', question: 'What is the capital of Australia?', answer: 'Canberra' },
+  { id: 'card-11', question: 'What programming language is known for web development?', answer: 'JavaScript' },
+  { id: 'card-12', question: 'What programming language is used for data science?', answer: 'Python' },
+  { id: 'card-13', question: 'What programming language is used for Android apps?', answer: 'Java' },
+  { id: 'card-14', question: 'What programming language is used for iOS apps?', answer: 'Swift' },
+  { id: 'card-15', question: 'What programming language is used for system programming?', answer: 'C' },
+  { id: 'card-16', question: 'What is the hex code for red?', answer: '#FF0000' },
+  { id: 'card-17', question: 'What is the hex code for blue?', answer: '#0000FF' },
+  { id: 'card-18', question: 'What is the hex code for green?', answer: '#00FF00' },
+  { id: 'card-19', question: 'What is the hex code for yellow?', answer: '#FFFF00' },
+  { id: 'card-20', question: 'What is the hex code for purple?', answer: '#800080' },
 ];
+
+// Save initial state if not loaded from storage
+if (!initialState.decks || !initialState.cards) {
+  saveState({ decks, cards });
+}
 
 function generateId(prefix) {
   return `${prefix}-${Date.now()}-${Math.round(Math.random() * 10000)}`;
@@ -256,6 +284,7 @@ function addDeck(name) {
   if (!trimmed) return;
 
   decks.push({ id: generateId('deck'), name: trimmed });
+  saveState({ decks, cards });
   renderDecks();
 }
 
@@ -266,6 +295,7 @@ function updateDeck(id, newName) {
   const deck = decks.find((item) => item.id === id);
   if (deck) {
     deck.name = trimmed;
+    saveState({ decks, cards });
     renderDecks();
   }
 }
@@ -275,6 +305,7 @@ function deleteDeck(id) {
   if (index === -1) return;
 
   decks.splice(index, 1);
+  saveState({ decks, cards });
   renderDecks();
 }
 
@@ -284,6 +315,7 @@ function addCard(question, answer) {
   if (!trimmedQuestion || !trimmedAnswer) return;
 
   cards.push({ id: generateId('card'), question: trimmedQuestion, answer: trimmedAnswer });
+  saveState({ decks, cards });
   renderCards();
 }
 
@@ -296,6 +328,7 @@ function updateCard(id, question, answer) {
   if (card) {
     card.question = trimmedQuestion;
     card.answer = trimmedAnswer;
+    saveState({ decks, cards });
     renderCards();
   }
 }
@@ -305,6 +338,7 @@ function deleteCard(id) {
   if (index === -1) return;
 
   cards.splice(index, 1);
+  saveState({ decks, cards });
   renderCards();
 }
 

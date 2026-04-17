@@ -46,6 +46,23 @@ body {
     line-height: 1.5;
 }
 
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: var(--radius);
+    z-index: 1000;
+    font-weight: 500;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
 img {
     max-width: 100%;
     display: block;
